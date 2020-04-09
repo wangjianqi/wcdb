@@ -41,6 +41,7 @@ func sample_transaction_main(baseDirectory: String) {
 
     //Run blocked transaction
     do {
+        // 事务
         try database.run(transaction: { () -> Void in
             let object = SampleTransaction()
             try database.insert(objects: object, intoTable: tableName)
@@ -58,6 +59,7 @@ func sample_transaction_main(baseDirectory: String) {
             try database.insert(objects: object, intoTable: tableName)
             try database.commit()
         } catch let error {
+            // 回滚
             try? database.rollback()
             throw error
         }

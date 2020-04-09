@@ -30,18 +30,23 @@ func sample_orm_main(baseDirectory: String) {
         let tableName = className
 
         let path = URL(fileURLWithPath: baseDirectory).appendingPathComponent(filename).path
+        // 打开数据库
         let database = Database(withPath: path)
+        // 关闭数据库
         database.close(onClosed: {
+            // 删除数据库
             try? database.removeFiles()
         })
 
         do {
+            // 创建数据
             try database.create(table: tableName, of: type)
         } catch let error {
             print("create table error: \(error)")
         }
 
         do {
+            // 获取对象
             let schemas: [Master] = try database.getObjects(on: Master.Properties.name, Master.Properties.sql,
                                                             fromTable: Master.builtinTableName)
             schemas.forEach({ (table) in

@@ -49,6 +49,7 @@ func sample_chailcall_main(baseDirectory: String) {
         object2.intValue = 2
         object2.stringValue = "Insert objects"
         objects.append(object2)
+        // 插入
         let insert = try database.prepareInsert(of: SampleChainCall.self, intoTable: tableName)
         try insert.execute(with: objects)
     } catch let error {
@@ -58,6 +59,7 @@ func sample_chailcall_main(baseDirectory: String) {
     //Select objects
     do {
         let property = SampleChainCall.Properties.intValue.max().as(SampleChainCall.Properties.intValue)
+        // 查询
         let select = try database.prepareSelect(on: property,
                                                 fromTable: tableName)
                                  .where(SampleChainCall.Properties.intValue==1)
@@ -86,6 +88,7 @@ func sample_chailcall_main(baseDirectory: String) {
 
     //Update by object
     do {
+        // 更新
         let update = try database.prepareUpdate(table: tableName, on: SampleChainCall.Properties.stringValue)
         let object = SampleChainCall()
         object.stringValue = "Update by object"
@@ -96,6 +99,7 @@ func sample_chailcall_main(baseDirectory: String) {
 
     //Delete
     do {
+        // 删除
         let delete = try database.prepareDelete(fromTable: tableName)
         try delete.execute()
     } catch let error {

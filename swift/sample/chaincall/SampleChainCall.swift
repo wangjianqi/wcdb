@@ -20,7 +20,7 @@
 
 import Foundation
 import WCDBSwift
-
+// class
 class SampleChainCall: TableCodable {
     var intValue: Int?
     var stringValue: String?

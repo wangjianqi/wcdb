@@ -33,8 +33,12 @@ class SampleORMColumnConstraint: TableCodable {
         case notNullProperty
         static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [
+                // 添加约束
+                // 升序、自增长
                 primaryProperty: ColumnConstraintBinding(isPrimary: true, orderBy: .ascending, isAutoIncrement: true),
+                // 非空
                 uniqueProperty: ColumnConstraintBinding(isNotNull: true),
+                // 唯一
                 notNullProperty: ColumnConstraintBinding(isUnique: true)
             ]
         }

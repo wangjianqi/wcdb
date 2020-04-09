@@ -35,6 +35,7 @@ class SampleORMTableConstraint: TableCodable {
         case uniqueKeyPart1
         case uniqueKeyPart2
         static var tableConstraintBindings: [TableConstraintBinding.Name: TableConstraintBinding]? {
+            // 多个主键
             let multiPrimaryBinding =
                 MultiPrimaryBinding(indexesBy: primaryKeyPart1.asIndex(orderBy: .descending), primaryKeyPart2)
             let multiUniqueBinding =

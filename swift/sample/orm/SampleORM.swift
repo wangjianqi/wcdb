@@ -19,45 +19,56 @@
  */
 
 import WCDBSwift
-
+// 枚举
 enum SampleORMType: Int, ColumnCodable {
     case type1 = 1
     case type2 = 2
-    
+    // ColumnCodableBase协议
     static var columnType: ColumnType {
         return .integer64
     }
-    
+    // ColumnDecodable协议
     init?(with value: FundamentalValue) {
         guard let object = SampleORMType(rawValue: Int(truncatingIfNeeded: value.int64Value)) else {
             return nil
         }
         self = object
     }
-    
+    // ColumnEncodable协议
     func archivedValue() -> FundamentalValue {
         return FundamentalValue(Int64(self.rawValue))
     }
 }
 
+// TableCodable: TableEncodable & TableDecodable
 class SampleORM: TableCodable {
     var identifier: Int = 0
     var desc: String = "nil"
     var value: Double = 0
     var timestamp: String?
     var type: SampleORMType?
+
+    // CodingKeys
     enum CodingKeys: String, CodingTableKey {
+        // 关联类型
         typealias Root = SampleORM
+        // CodingTableKey的
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
+
         case identifier
         case desc
         case value
         case timestamp
         case type
+
+        // CodingTableKey的
         static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [
+                // 主键
                 .identifier: ColumnConstraintBinding(isPrimary: true),
+                // 默认值
                 .value: ColumnConstraintBinding(defaultTo: 1.0),
+                // 时间戳，当前时间
                 .timestamp: ColumnConstraintBinding(defaultTo: .currentTimestamp)
             ]
         }
